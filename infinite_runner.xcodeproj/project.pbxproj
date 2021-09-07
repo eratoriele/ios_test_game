@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		22DC555426E79D3A00A4906E /* enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC555326E79D3A00A4906E /* enums.swift */; };
 		22E8C63C26E7808300F022EA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E8C63B26E7808300F022EA /* AppDelegate.swift */; };
 		22E8C63E26E7808300F022EA /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 22E8C63D26E7808300F022EA /* GameScene.sks */; };
 		22E8C64026E7808300F022EA /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 22E8C63F26E7808300F022EA /* Actions.sks */; };
@@ -37,6 +38,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		22DC555326E79D3A00A4906E /* enums.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = enums.swift; sourceTree = "<group>"; };
 		22E8C63826E7808300F022EA /* infinite_runner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = infinite_runner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		22E8C63B26E7808300F022EA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		22E8C63D26E7808300F022EA /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -112,6 +114,7 @@
 				22E8C64826E7808F00F022EA /* Assets.xcassets */,
 				22E8C64A26E7808F00F022EA /* LaunchScreen.storyboard */,
 				22E8C64D26E7808F00F022EA /* Info.plist */,
+				22DC555326E79D3A00A4906E /* enums.swift */,
 			);
 			path = infinite_runner;
 			sourceTree = "<group>";
@@ -269,6 +272,7 @@
 			files = (
 				22E8C64226E7808300F022EA /* GameScene.swift in Sources */,
 				22E8C64426E7808300F022EA /* GameViewController.swift in Sources */,
+				22DC555426E79D3A00A4906E /* enums.swift in Sources */,
 				22E8C63C26E7808300F022EA /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -445,6 +449,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = Z3HLDL2DZH;
 				INFOPLIST_FILE = infinite_runner/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -463,6 +468,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = Z3HLDL2DZH;
 				INFOPLIST_FILE = infinite_runner/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
