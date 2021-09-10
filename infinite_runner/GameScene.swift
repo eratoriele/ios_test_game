@@ -10,9 +10,26 @@ import SpriteKit
 import GameplayKit
 
 class GameScene: SKScene {
-
+    
     let player = SKSpriteNode(imageNamed: "playerShip")
     
+    let gameArea: CGRect
+    
+    override init(size: CGSize) {
+        
+        let maxAspectRatio: CGFloat = 16.0 / 9.0
+        let playableWidth = size.height / maxAspectRatio
+        let margin = (size.width - playableWidth) / 2
+        gameArea = CGRect(x: margin, y: 0, width: playableWidth, height: size.height)
+        
+        super.init(size: size)
+        
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     override func didMove(to view: SKView) {
         
         // create the background as big as the screen
@@ -38,6 +55,11 @@ class GameScene: SKScene {
 
         self.addChild(player)
         
+        // Spawn enemies every few seconds
+        let _ = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
+            self.spawnEnemy()
+        }
+        
     }
     
     // Fire a bullet,it can be fired both up, by the player, and down by an enemy
@@ -60,6 +82,37 @@ class GameScene: SKScene {
         
         bullet.run(bulletSequence)
     }
+    
+    func spawnEnemy() {
+        
+        let enemy = SKSpriteNode(imageNamed: "enemyShip")
+        enemy.setScale(1)
+        
+        let randomXStart = CGFloat.random(in: gameArea.minX...gameArea.maxX)
+        let YStart = gameArea.maxY + enemy.size.height / 2
+        let randomXDest = CGFloat.random(in: gameArea.minX...gameArea.maxX)
+        let YDest = gameArea.minY - enemy.size.height / 2
+        
+        let startPoint = CGPoint(x: randomXStart, y: YStart)
+        let endPoint = CGPoint(x: randomXDest, y: YDest)
+        
+        enemy.position = startPoint
+        enemy.zPosition = zPositions.enemy
+        self.addChild(enemy)
+        
+        let moveEnemy = SKAction.move(to: endPoint, duration: 2)
+        let deleteEnemy = SKAction.removeFromParent()
+        let enemySequence = SKAction.sequence([moveEnemy, deleteEnemy])
+        
+        enemy.run(enemySequence)
+        
+        let dx = endPoint.x - startPoint.x
+        let dy = endPoint.y - startPoint.y
+        let rotateAmount = atan2(dy, dx)
+        
+        enemy.zRotation = rotateAmount
+                
+    }
 
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         
@@ -67,9 +120,32 @@ class GameScene: SKScene {
             
             let touchPoint = touch.location(in: self)
             let previousTouchPoint = touch.previousLocation(in: self)
+            let xMoveDistance = touchPoint.x - previousTouchPoint.x
+            let yMoveDistance = touchPoint.y - previousTouchPoint.y
             
-            player.position.x += touchPoint.x - previousTouchPoint.x
-            player.position.y += touchPoint.y - previousTouchPoint.y
+            // If the player goes too much right
+            if player.position.x + player.size.width/2 + xMoveDistance > gameArea.maxX {
+                player.position.x = gameArea.maxX - player.size.width/2
+            }
+            // If the player goes too much left
+            else if player.position.y - player.size.width/2 + xMoveDistance < gameArea.minX {
+                player.position.y = gameArea.minX + player.size.width/2
+            }
+            else {
+                player.position.x += xMoveDistance
+            }
+            // If the player goes too much up
+            if player.position.y + player.size.height/2 + yMoveDistance > gameArea.maxY {
+                player.position.y = gameArea.maxY - player.size.height/2
+            }
+            // If the player goes too much down
+            else if player.position.y - player.size.height/2 + xMoveDistance < gameArea.minY {
+                player.position.y = gameArea.minY + player.size.height/2
+            }
+            // Movement is inside the game area
+            else {
+                player.position.y += yMoveDistance
+            }
         }
         
     }

@@ -14,7 +14,8 @@ enum zPositions {
     
     static let background: CGFloat = 0
     static let bullet: CGFloat = 1
-    static let player: CGFloat = 2    
+    static let player: CGFloat = 2
+    static let enemy: CGFloat = 3
 }
 
 enum playerStartingPosition {
