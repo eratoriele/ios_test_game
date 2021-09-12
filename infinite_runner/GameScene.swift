@@ -12,8 +12,8 @@ import GameplayKit
 class GameScene: SKScene {
     
     let player = SKSpriteNode(imageNamed: "playerShip")
+    var gameArea: CGRect = CGRect()
     
-    let gameArea: CGRect
     
     override init(size: CGSize) {
         
@@ -23,13 +23,12 @@ class GameScene: SKScene {
         gameArea = CGRect(x: margin, y: 0, width: playableWidth, height: size.height)
         
         super.init(size: size)
-        
     }
     
     required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: aDecoder)
     }
-
+    
     override func didMove(to view: SKView) {
         
         // create the background as big as the screen
@@ -76,7 +75,7 @@ class GameScene: SKScene {
         }
         self.addChild(bullet)
         
-        let moveBullet = SKAction.moveTo(y: self.size.height + bullet.size.height, duration: 1)
+        let moveBullet = SKAction.moveTo(y: self.size.height + bullet.position.y + bullet.size.height, duration: 1)
         let deleteBullet = SKAction.removeFromParent()
         let bulletSequence = SKAction.sequence([moveBullet, deleteBullet])
         
@@ -123,13 +122,18 @@ class GameScene: SKScene {
             let xMoveDistance = touchPoint.x - previousTouchPoint.x
             let yMoveDistance = touchPoint.y - previousTouchPoint.y
             
+            print("player position: ", player.position)
+            print("gameArea max X: ", gameArea.maxX)
+            print("gameArea min X: ", gameArea.minX)
+            print("gameArea max y: ", gameArea.maxY)
+            
             // If the player goes too much right
             if player.position.x + player.size.width/2 + xMoveDistance > gameArea.maxX {
                 player.position.x = gameArea.maxX - player.size.width/2
             }
             // If the player goes too much left
-            else if player.position.y - player.size.width/2 + xMoveDistance < gameArea.minX {
-                player.position.y = gameArea.minX + player.size.width/2
+            else if player.position.x - player.size.width/2 + xMoveDistance < gameArea.minX {
+                player.position.x = gameArea.minX + player.size.width/2
             }
             else {
                 player.position.x += xMoveDistance

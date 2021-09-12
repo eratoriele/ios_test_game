@@ -26,7 +26,7 @@ enum playerStartingPosition {
 
 enum bulletConstants {
     
-    static let reAttackTime = 0.3
+    static let reAttackTime = 0.15
     
     enum direction {
         case up
